@@ -1,25 +1,20 @@
 package com.boxer.assist;
 
-
-import com.boxer.assist.gen.JavaClass2DDL;
+import org.mapstruct.factory.Mappers;
 
 public class OrderTest {
-    /**
-     * 订单ID
-     */
-    private Long orderId;
-    /**
-     * 买家ID
-     */
-    private Long buyerId;
-    private Double totalAmt;//订单总金额
-    private java.time.LocalDateTime orderDate;
-    private Integer status;
-    private Boolean isDeleted;
-
     public static void main(String[] args) {
-        String s = JavaClass2DDL.generateDDL(OrderTest.class, "postgresql");
-        System.out.println(s);
-    }
+        OrderMapper mapper = Mappers.getMapper(OrderMapper.class);
 
+        OrderDTO dto = new OrderDTO();
+        dto.setBuyerId(101L);
+        dto.setOrderId(10001L);
+        dto.setTotalAmt( Double.parseDouble("120.55"));
+
+        OrderBo bo = mapper.toBo(dto);
+        System.out.println("BO orderId: " + bo.getOrderId()); // 输出: John Doe
+        System.out.println("BO buyerId: " + bo.getBuyerId());           // 输出: 30
+        System.out.println("BO totalPrice: " + bo.getTotalPrice());   // 输出: john.doe@example.com
+
+    }
 }
